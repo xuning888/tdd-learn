@@ -1,8 +1,11 @@
 package com.example.tdd.configuration;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @date 2023/10/4 23:51
  */
 public class ConfigurationTest2 {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfigurationTest2.class);
 
     @TempDir
     Path tempDir;
@@ -31,6 +36,11 @@ public class ConfigurationTest2 {
                 .fromFile(file.toFile())
                 .dateFormat("yyyy-MM-dd")
                 .build();
+    }
+
+    @AfterEach
+    void tearDown() {
+        logger.info("Noting to do for now.");
     }
 
     @Test

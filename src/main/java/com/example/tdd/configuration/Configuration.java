@@ -18,18 +18,16 @@ public class Configuration {
     private final File file;
     private final String datePattern;
     private final Properties properties = new Properties();
-
-    public Configuration(File file, String datePattern) {
+    private Configuration(File file, String datePattern) {
         this.file = file;
         this.datePattern = datePattern;
-        loadPropFromFile();
     }
 
     public static ConfigurationBuilder builder() {
         return new ConfigurationBuilder();
     }
 
-    private void loadPropFromFile() {
+    protected void loadPropFromFile() {
         try (FileInputStream fileInputStream = new FileInputStream(this.file);
              InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8)) {
             this.properties.load(inputStreamReader);
@@ -73,7 +71,9 @@ public class Configuration {
         }
 
         public Configuration build() {
-            return new Configuration(file, datePattern);
+            Configuration configuration = new Configuration(file, datePattern);
+            configuration.loadPropFromFile();
+            return configuration;
         }
     }
 }
